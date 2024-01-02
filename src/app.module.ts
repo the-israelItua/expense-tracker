@@ -10,6 +10,8 @@ import { RequestUserMiddleware } from './shared/middleware/request-user.middlewa
 import { JwtModule } from '@nestjs/jwt';
 import { ResponseInterceptor } from './shared/interceptors/response.interceptor';
 import { AuthController } from './auth/auth.controller';
+import { CategoryModule } from './category/category.module';
+import { CategoryController } from './category/category.controller';
 
 @Module({
   imports: [
@@ -17,19 +19,20 @@ import { AuthController } from './auth/auth.controller';
     UserModule,
     SharedModule,
     JwtModule.register({ secret: "mySecret" }),
+    CategoryModule,
   ],
   // ],
-  controllers: [AppController, AuthController],
+  controllers: [AppController, AuthController,],
   providers: [
     AppService,
     // {
     //   provide: APP_FILTER,
     //   useClass: AllExceptionFilter,
     // },
-    // {
-    //   provide: APP_INTERCEPTOR,
-    //   useClass: ResponseInterceptor,
-    // },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ResponseInterceptor,
+    },
       {
         provide: APP_PIPE,
         useValue: new ValidationPipe({

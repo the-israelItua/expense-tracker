@@ -1,7 +1,3 @@
-
-
-
-
 import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from 'src/shared/strategy/jwt.strategy';
@@ -10,28 +6,27 @@ import { RequestContextModule } from 'nestjs-request-context';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { ResponseInterceptor } from 'src/shared/interceptors/response.interceptor';
 import { SharedModule } from 'src/shared/shared.module';
-import { LocalStrategy } from 'src/shared/strategy/local.strategy';
-import { UserService } from './user.service';
-import { UserController } from './user.controller';
+import { CategoryController } from './category.controller';
+import { CategoryService } from './category.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './user.entity';
+import { Category } from './category.entity';
 
 @Module({
-  controllers: [UserController],
+  controllers: [CategoryController],
   imports: [
     RequestContextModule,
-    UserModule,
+    CategoryModule,
     SharedModule,
     PassportModule,
     JwtModule.register({ secret: "mySecret" }),
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([Category]),
   ],
   providers: [
-    UserService,
+    CategoryService,
     // LocalStrategy,
     JwtStrategy,
   ],
-  exports: [JwtStrategy, UserService],
+  exports: [JwtStrategy, CategoryService],
 })
-export class UserModule {}
+export class CategoryModule {}
 

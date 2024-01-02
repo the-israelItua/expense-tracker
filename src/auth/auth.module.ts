@@ -21,10 +21,6 @@ import { AuthController } from './auth.controller';
     JwtModule.register({ secret: "mySecret" }),
   ],
   providers: [
-    {
-      provide: APP_INTERCEPTOR,
-      useClass: ResponseInterceptor,
-    },
     AuthService,
     LocalStrategy,
     JwtStrategy,

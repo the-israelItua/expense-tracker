@@ -1,5 +1,6 @@
 import { Exclude } from "class-transformer";
-import {  BaseEntity, Column, CreateDateColumn, DeleteDateColumn, Entity, Index, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Category } from "src/category/category.entity";
+import {  BaseEntity, Column, CreateDateColumn, DeleteDateColumn, Entity, Index, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()
 export class User extends BaseEntity {
@@ -46,5 +47,8 @@ export class User extends BaseEntity {
   @Exclude()
   @DeleteDateColumn()
   deletedDate: Date;
+
+  @OneToMany(() => Category, (category) => category.user)
+  category: Category[]
 }
 
