@@ -12,6 +12,7 @@ import { ResponseInterceptor } from './shared/interceptors/response.interceptor'
 import { AuthController } from './auth/auth.controller';
 import { CategoryModule } from './category/category.module';
 import { CategoryController } from './category/category.controller';
+import { ExpenseModule } from './expense/expense.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { CategoryController } from './category/category.controller';
     SharedModule,
     JwtModule.register({ secret: "mySecret" }),
     CategoryModule,
+    ExpenseModule,
   ],
   // ],
   controllers: [AppController, AuthController,],

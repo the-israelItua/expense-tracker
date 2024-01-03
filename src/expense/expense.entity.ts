@@ -1,16 +1,22 @@
 import { Exclude } from "class-transformer";
-import { Expense } from "src/expense/expense.entity";
+import { Category } from "src/category/category.entity";
 import { User } from "src/user/user.entity";
 import {  BaseEntity, Column, CreateDateColumn, DeleteDateColumn, Entity, Index, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()
-export class Category extends BaseEntity {
+export class Expense extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: string;
 
+    @Column()
+    amount: number;
+
     @Index({ fulltext: true })
     @Column()
-    name: string;
+    title: string;
+
+    @Column()
+    date: Date;
 
     @Exclude()
     @CreateDateColumn()
@@ -24,13 +30,17 @@ export class Category extends BaseEntity {
     @DeleteDateColumn()
     deletedDate: Date;
 
-    @ManyToOne(() => User, (user) => user.category)
+    @ManyToOne(() => User, (user) => user.expense)
     user: User;
 
     @Column()
     userId: string;
 
-    @OneToMany(() => Expense, (expense) => expense.category)
-    expense: Expense[]
+    @ManyToOne(() => Category, (category) => category.expense)
+    category: Category;
+
+    @Exclude()
+    @Column()
+    categoryId: string;
 }
 

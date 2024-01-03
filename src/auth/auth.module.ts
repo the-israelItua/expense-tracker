@@ -14,10 +14,7 @@ import { AuthController } from './auth.controller';
 @Module({
   controllers: [AuthController],
   imports: [
-    RequestContextModule,
     UserModule,
-    SharedModule,
-    PassportModule,
     JwtModule.register({ secret: "mySecret" }),
   ],
   providers: [

@@ -35,7 +35,7 @@ export class AuthService {
   }
 
     async signup(body: CreateUserDto) {
-        const user = await this.userService.findOne({email: body.email, phoneNumber: body.phoneNumber, username: body.username});
+        const user = await this.userService.findOne({email: body.email, phoneNumber: body.phoneNumber});
         if (user) {
           throw new BadRequestException('This user already exists');
         }
@@ -57,7 +57,7 @@ export class AuthService {
       }
 
       async signin(body: Partial<CreateUserDto>) {
-        const user = await this.userService.findOne({email: body.email, phoneNumber: body.phoneNumber, username: body.username});
+        const user = await this.userService.findOne({email: body.email, phoneNumber: body.phoneNumber});
         if (!user) {
           throw new BadRequestException('User does not exist');
         }

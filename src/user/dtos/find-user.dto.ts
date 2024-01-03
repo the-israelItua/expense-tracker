@@ -1,10 +1,6 @@
 import { IsEmail,  IsString, MaxLength, MinLength } from "class-validator";
 
 export class FindUserDto {
-
-    @IsString()
-    username: string;
-
     @IsEmail()
     email: string;
 

@@ -17,7 +17,7 @@ export class UserService {
   }
 
   async findOne(body: Partial<FindUserDto>): Promise<User | undefined> {
-    return this.userRepository.findOne({ where: [{ email: body.email , phoneNumber: body.phoneNumber, username: body.username}] });
+    return this.userRepository.findOne({ where: [{ email: body.email , phoneNumber: body.phoneNumber}] });
   }
 
   create(body: CreateUserDto) {

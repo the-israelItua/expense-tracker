@@ -1,5 +1,6 @@
 import { Exclude } from "class-transformer";
 import { Category } from "src/category/category.entity";
+import { Expense } from "src/expense/expense.entity";
 import {  BaseEntity, Column, CreateDateColumn, DeleteDateColumn, Entity, Index, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()
@@ -14,10 +15,6 @@ export class User extends BaseEntity {
     @Index({ fulltext: true })
     @Column()
     lastName: string;
-
-    @Index({ fulltext: true })
-  @Column()
-    username: string;
 
     @Column()
     @Exclude()
@@ -50,5 +47,8 @@ export class User extends BaseEntity {
 
   @OneToMany(() => Category, (category) => category.user)
   category: Category[]
+
+  @OneToMany(() => Expense, (expense) => expense.user)
+  expense: Expense[]
 }
 
