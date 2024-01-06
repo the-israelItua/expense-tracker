@@ -1,14 +1,12 @@
 import { Expose, Transform } from "class-transformer";
+import { IncomeType } from "../income.entity";
 
-export class ExpenseDto {
+export class IncomeDto {
     @Expose()
     id: string;
 
     @Expose()
     userId: string;
-
-    @Expose()
-    categoryId: string;
 
     @Expose()
     amount: number;
@@ -19,5 +17,6 @@ export class ExpenseDto {
     @Expose()
     date: Date;
 
-
+    @Expose()
+    incomeType: IncomeType;
 }

@@ -33,15 +33,23 @@ export class ExpenseService {
 
         expense.user = user
         expense.category = category
+        
         return this.expenseRepository.save(expense);
       }
     
       async update(id: string, body: CreateExpenseDto) {
+        const category = await this.categoryService.findOne(body.categoryId)
+        if(!category){
+            throw new NotFoundException("Category not found")
+        }
         const expense = await this.findOne(id)
         if(!expense){
           throw new NotFoundException("expense not found")
         }
-        // expense.title = body.title
+
+        Object.assign(expense, body);
+
+
         return this.expenseRepository.save(expense);
       }
     

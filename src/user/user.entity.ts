@@ -1,6 +1,7 @@
 import { Exclude } from "class-transformer";
 import { Category } from "src/category/category.entity";
 import { Expense } from "src/expense/expense.entity";
+import { Income } from "src/income/income.entity";
 import {  BaseEntity, Column, CreateDateColumn, DeleteDateColumn, Entity, Index, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()
@@ -50,5 +51,8 @@ export class User extends BaseEntity {
 
   @OneToMany(() => Expense, (expense) => expense.user)
   expense: Expense[]
+
+  @OneToMany(() => Income, (income) => income.user)
+  income: Income[]
 }
 

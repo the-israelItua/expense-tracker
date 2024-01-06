@@ -1,10 +1,14 @@
 import { Exclude } from "class-transformer";
-import { Category } from "src/category/category.entity";
 import { User } from "src/user/user.entity";
 import {  BaseEntity, Column, CreateDateColumn, DeleteDateColumn, Entity, Index, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
+export enum IncomeType {
+    ONE_TIME="oneTime",
+    RECURRING= "recurring"
+}
+
 @Entity()
-export class Expense extends BaseEntity {
+export class Income extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: string;
 
@@ -18,6 +22,13 @@ export class Expense extends BaseEntity {
     @Column()
     date: Date;
 
+    @Column({
+        type: "enum",
+        enum: IncomeType,
+        default: IncomeType.ONE_TIME
+    })
+    incomeType: IncomeType;
+
     @Exclude()
     @CreateDateColumn()
     createdDate: Date;
@@ -30,16 +41,10 @@ export class Expense extends BaseEntity {
     @DeleteDateColumn()
     deletedDate: Date;
 
-    @ManyToOne(() => User, (user) => user.expense)
+    @ManyToOne(() => User, (user) => user.income)
     user: User;
 
     @Column()
     userId: string;
-
-    @ManyToOne(() => Category, (category) => category.expense)
-    category: Category;
-
-    @Column()
-    categoryId: string;
 }
 

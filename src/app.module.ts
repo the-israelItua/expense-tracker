@@ -13,6 +13,7 @@ import { AuthController } from './auth/auth.controller';
 import { CategoryModule } from './category/category.module';
 import { CategoryController } from './category/category.controller';
 import { ExpenseModule } from './expense/expense.module';
+import { IncomeModule } from './income/income.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { ExpenseModule } from './expense/expense.module';
     JwtModule.register({ secret: "mySecret" }),
     CategoryModule,
     ExpenseModule,
+    IncomeModule,
   ],
   // ],
   controllers: [AppController, AuthController,],
