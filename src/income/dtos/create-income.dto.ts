@@ -1,4 +1,4 @@
-import { IsDateString, IsNumber, IsString, Min } from "class-validator";
+import { IsDateString, IsEnum, IsNumber, IsString, Min } from "class-validator";
 import { IncomeType } from "../income.entity";
 
 export class CreateIncomeDto {
@@ -6,7 +6,7 @@ export class CreateIncomeDto {
     @Min(0)
     amount: number;
 
-    @IsString()
+    @IsEnum(IncomeType)
     incomeType: IncomeType
 
     @IsString()

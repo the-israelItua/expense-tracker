@@ -24,4 +24,32 @@ export class UserService {
     const user = this.userRepository.create(body);
     return this.userRepository.save(user);
   }
+
+  async addIncome(amount: number, body: Partial<FindUserDto>) {
+    const user = await this.findOne(body);
+    user.totalIncome += amount
+    user.balance += amount
+    return this.userRepository.save(user);
+  }
+
+  async addExpense(amount: number, body: Partial<FindUserDto>) {
+    const user = await this.findOne(body);
+    user.totalExpenses += amount
+    user.balance -= amount
+    return this.userRepository.save(user);
+  }
+
+  async removeIncome(amount: number, body: Partial<FindUserDto>) {
+    const user = await this.findOne(body);
+    user.totalIncome -= amount
+    user.balance -= amount
+    return this.userRepository.save(user);
+  }
+
+  async removeExpense(amount: number, body: Partial<FindUserDto>) {
+    const user = await this.findOne(body);
+    user.totalExpenses -= amount
+    user.balance += amount
+    return this.userRepository.save(user);
+  }
 }

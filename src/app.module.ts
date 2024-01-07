@@ -4,16 +4,15 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { SharedModule } from './shared/shared.module';
 import { UserModule } from './user/user.module';
-import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
-import { AllExceptionFilter } from './shared/exception-filters/not-found-exception.filter';
+import { APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { RequestUserMiddleware } from './shared/middleware/request-user.middleware';
 import { JwtModule } from '@nestjs/jwt';
 import { ResponseInterceptor } from './shared/interceptors/response.interceptor';
 import { AuthController } from './auth/auth.controller';
 import { CategoryModule } from './category/category.module';
-import { CategoryController } from './category/category.controller';
 import { ExpenseModule } from './expense/expense.module';
 import { IncomeModule } from './income/income.module';
+import { JwtStrategy } from './shared/strategy/jwt.strategy';
 
 @Module({
   imports: [
@@ -28,6 +27,7 @@ import { IncomeModule } from './income/income.module';
   // ],
   controllers: [AppController, AuthController,],
   providers: [
+    JwtStrategy,
     AppService,
     // {
     //   provide: APP_FILTER,

@@ -34,6 +34,15 @@ export class User extends BaseEntity {
     })
     phoneNumber: string;
 
+    @Column('float', {default: 0})
+    totalIncome: number;
+ 
+    @Column('float', {default: 0})
+    totalExpenses: number;
+ 
+    @Column('float', {default: 0})
+    balance: number;
+
   @Exclude()
   @CreateDateColumn()
   createdDate: Date;
