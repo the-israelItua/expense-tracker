@@ -9,6 +9,7 @@ import {
   Post,
   Request,
 } from '@nestjs/common';
+import { ApiBody } from '@nestjs/swagger';
 import { SecureEndpoint } from 'src/shared/decorators/securedendpoint.decorators';
 import { Serialize } from 'src/shared/interceptors/serialize.interceptor';
 import { UserService } from 'src/user/user.service';
@@ -40,6 +41,7 @@ export class IncomeController {
   }
 
   @Post()
+  @ApiBody({ type: CreateIncomeDto })
   async createIncome(@Request() req: any, @Body() body: CreateIncomeDto) {
     await this.userService.addIncome(body.amount, {
       email: req.user.email,
@@ -49,6 +51,7 @@ export class IncomeController {
   }
 
   @Patch('/:id')
+  @ApiBody({ type: CreateIncomeDto })
   updateIncome(@Request() req: any, @Param('id') id: string, @Body() body: CreateIncomeDto) {
     return this.incomeService.update(id, body, req.user);
   }

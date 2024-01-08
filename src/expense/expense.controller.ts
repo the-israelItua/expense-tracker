@@ -9,6 +9,7 @@ import {
   Post,
   Request,
 } from '@nestjs/common';
+import { ApiBody } from '@nestjs/swagger';
 import { SecureEndpoint } from 'src/shared/decorators/securedendpoint.decorators';
 import { Serialize } from 'src/shared/interceptors/serialize.interceptor';
 import { UserService } from 'src/user/user.service';
@@ -40,6 +41,7 @@ export class ExpenseController {
   }
 
   @Post()
+  @ApiBody({ type: CreateExpenseDto })
   async createExpense(@Request() req: any, @Body() body: CreateExpenseDto) {
     await this.userService.addExpense(body.amount, {
       email: req.user.email,
@@ -49,6 +51,7 @@ export class ExpenseController {
   }
 
   @Patch('/:id')
+  @ApiBody({ type: CreateExpenseDto })
   updateExpense(
     @Request() req: any,
     @Param('id') id: string,

@@ -9,7 +9,7 @@ import { Category } from './category.entity';
 @Module({
   controllers: [CategoryController],
   imports: [
-    JwtModule.register({ secret: "mySecret" }),
+    JwtModule,
     TypeOrmModule.forFeature([Category]),
   ],
   providers: [

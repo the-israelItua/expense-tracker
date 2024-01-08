@@ -8,6 +8,7 @@ import { JwtService } from '@nestjs/jwt';
 import { instanceToPlain } from 'class-transformer';
   import { randomBytes, scrypt as _scrypt } from 'crypto';
 import { CreateUserDto } from 'src/user/dtos/create-user.dto';
+import { LoginUserDto } from 'src/user/dtos/login-user.dto';
 import { User } from 'src/user/user.entity';
 import { UserService } from 'src/user/user.service';
 import { promisify } from 'util';
@@ -31,7 +32,7 @@ export class AuthService {
   }
 
   generateUserAccessToken(user: User) {
-    return this.jwtService.sign(instanceToPlain(user), { expiresIn: '2d', secret: "mySecret" });
+    return this.jwtService.sign(instanceToPlain(user), { expiresIn: '2d', secret: process.env.JWT_SECRET  });
   }
 
     async signup(body: CreateUserDto) {
@@ -56,8 +57,8 @@ export class AuthService {
           };
       }
 
-      async signin(body: Partial<CreateUserDto>) {
-        const user = await this.userService.findOne({email: body.email, phoneNumber: body.phoneNumber});
+      async signin(body: LoginUserDto) {
+        const user = await this.userService.findOne({email: body.email});
         if (!user) {
           throw new BadRequestException('User does not exist');
         }

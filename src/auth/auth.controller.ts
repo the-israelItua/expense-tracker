@@ -11,8 +11,10 @@ import {
     Session,
     UseGuards,
   } from '@nestjs/common';
+import { ApiBody } from '@nestjs/swagger';
 import { SecureEndpoint } from 'src/shared/decorators/securedendpoint.decorators';
 import { CreateUserDto } from 'src/user/dtos/create-user.dto';
+import { LoginUserDto } from 'src/user/dtos/login-user.dto';
 import { UserService } from 'src/user/user.service';
 import { AuthService } from './auth.service';
 
@@ -27,12 +29,14 @@ import { AuthService } from './auth.service';
     }
   
     @Post('/signup')
+    @ApiBody({ type: CreateUserDto })
     createUser(@Body() body: CreateUserDto) {
       return this.authService.signup(body);
     }
   
     @Post('/signin')
-    loginUser(@Body() body: Partial<CreateUserDto>) {
+    @ApiBody({ type: LoginUserDto })
+    loginUser(@Body() body: LoginUserDto) {
       return this.authService.signin(body);
     }
    

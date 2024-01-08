@@ -1,4 +1,5 @@
 import { Body, Controller, Delete, Get, NotFoundException, Param, Patch, Post, Query, Request } from '@nestjs/common';
+import { ApiBody } from '@nestjs/swagger';
 import { SecureEndpoint } from 'src/shared/decorators/securedendpoint.decorators';
 import { Serialize } from 'src/shared/interceptors/serialize.interceptor';
 import { CategoryService } from './category.service';
@@ -26,11 +27,13 @@ export class CategoryController {
     }
 
     @Post()
+    @ApiBody({ type: CreateCategoryDto })
      createCategory(@Request() req: any,  @Body() body: CreateCategoryDto){
        return  this.categoryService.create(req.user, body)
      }
 
      @Patch("/:id")
+     @ApiBody({ type: CreateCategoryDto })
       updateCategory(@Param("id") id: string, @Body() body: CreateCategoryDto) {
        return this.categoryService.update(id, body);
      }
