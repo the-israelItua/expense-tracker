@@ -19,7 +19,7 @@ import { JwtStrategy } from './shared/strategy/jwt.strategy';
     AuthModule,
     UserModule,
     SharedModule,
-    JwtModule.register({ secret: "mySecret" }),
+    JwtModule.register({ secret: process.env.JWT_SECRET }),
     CategoryModule,
     ExpenseModule,
     IncomeModule,
