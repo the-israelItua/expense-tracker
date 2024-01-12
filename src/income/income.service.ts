@@ -13,13 +13,13 @@ export class IncomeService {
     private userService: UserService,
   ) {}
 
-  async find(): Promise<Income[]> {
-    const data = await this.incomeRepository.find();
+  async find(user: User): Promise<Income[]> {
+    const data = await this.incomeRepository.find({where:{userId: user.id}});
     return data;
   }
 
-  async findOne(id: string) {
-    const income = await this.incomeRepository.findOne({ where: { id } });
+  async findOne(id: string, user: User) {
+    const income = await this.incomeRepository.findOne({ where: { id, userId: user.id } });
     return income;
   }
 
@@ -30,7 +30,7 @@ export class IncomeService {
   }
 
   async update(id: string, body: CreateIncomeDto, user: User) {
-    const income = await this.findOne(id);
+    const income = await this.findOne(id, user);
     if (!income) {
       throw new NotFoundException('Income not found');
     }
@@ -51,7 +51,7 @@ export class IncomeService {
   }
 
   async delete(id: string, user: User) {
-    const income = await this.findOne(id);
+    const income = await this.findOne(id, user);
     if (!income) {
       throw new NotFoundException('Income not found');
     }

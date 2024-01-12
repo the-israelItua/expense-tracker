@@ -27,13 +27,13 @@ export class IncomeController {
   ) {}
 
   @Get()
-  getIncomes() {
-    return this.incomeService.find();
+  getIncomes(@Request() req: any) {
+    return this.incomeService.find(req.user);
   }
 
   @Get('/:id')
-  getIncome(@Param('id') id: string) {
-    const income = this.incomeService.findOne(id);
+  getIncome(@Request() req: any,  @Param('id') id: string) {
+    const income = this.incomeService.findOne(id, req.user);
     if (!income) {
       throw new NotFoundException('Income not found');
     }

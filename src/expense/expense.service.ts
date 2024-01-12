@@ -15,18 +15,18 @@ export class ExpenseService {
     private userService: UserService,
   ) {}
 
-  async find(): Promise<Expense[]> {
-    const data = await this.expenseRepository.find();
+  async find(user: User): Promise<Expense[]> {
+    const data = await this.expenseRepository.find({ where: { userId: user.id }} );
     return data;
   }
 
-  async findOne(id: string) {
-    const expense = await this.expenseRepository.findOne({ where: { id } });
+  async findOne(id: string, user: User) {
+    const expense = await this.expenseRepository.findOne({ where: { id, userId: user.id } });
     return expense;
   }
 
   async create(user: User, body: CreateExpenseDto) {
-    const category = await this.categoryService.findOne(body.categoryId);
+    const category = await this.categoryService.findOne(body.categoryId, user);
     if (!category) {
       throw new NotFoundException('Category not found');
     }
@@ -39,11 +39,11 @@ export class ExpenseService {
   }
 
   async update(id: string, body: CreateExpenseDto, user: User) {
-    const category = await this.categoryService.findOne(body.categoryId);
+    const category = await this.categoryService.findOne(body.categoryId, user);
     if (!category) {
       throw new NotFoundException('Category not found');
     }
-    const expense = await this.findOne(id);
+    const expense = await this.findOne(id, user);
     if (!expense) {
       throw new NotFoundException('expense not found');
     }
@@ -64,7 +64,7 @@ export class ExpenseService {
   }
 
   async delete(id: string, user: User) {
-    const expense = await this.findOne(id);
+    const expense = await this.findOne(id, user);
     if (!expense) {
       throw new NotFoundException('Expense not found');
     }

@@ -27,13 +27,13 @@ export class ExpenseController {
   ) {}
 
   @Get()
-  getExpenses() {
-    return this.expenseService.find();
+  getExpenses(@Request() req: any,) {
+    return this.expenseService.find(req.user);
   }
 
   @Get('/:id')
-  getExpense(@Param('id') id: string) {
-    const expense = this.expenseService.findOne(id);
+  getExpense(@Request() req: any, @Param('id') id: string) {
+    const expense = this.expenseService.findOne(id, req.user);
     if (!expense) {
       throw new NotFoundException('Expense not found');
     }

@@ -13,13 +13,13 @@ export class CategoryController {
     constructor(private readonly categoryService: CategoryService) {}
 
     @Get()
-    getCategories() {
-      return this.categoryService.find();
+    getCategories(@Request() req: any,) {
+      return this.categoryService.find(req.user);
     }
 
     @Get("/:id")
-    getCategory(@Param("id") id: string) {
-      const category = this.categoryService.findOne(id)
+    getCategory(@Request() req: any, @Param("id") id: string) {
+      const category = this.categoryService.findOne(id, req.user)
       if(!category){
         throw new NotFoundException("Category not found")
       }
@@ -34,12 +34,12 @@ export class CategoryController {
 
      @Patch("/:id")
      @ApiBody({ type: CreateCategoryDto })
-      updateCategory(@Param("id") id: string, @Body() body: CreateCategoryDto) {
-       return this.categoryService.update(id, body);
+      updateCategory(@Request() req: any, @Param("id") id: string, @Body() body: CreateCategoryDto) {
+       return this.categoryService.update(id, body, req.user);
      }
     
      @Delete("/:id")
-     deleteCategory(@Param("id") id: string) {
-      return this.categoryService.delete(id);
+     deleteCategory(@Request() req: any, @Param("id") id: string) {
+      return this.categoryService.delete(id, req.user);
     }
 }

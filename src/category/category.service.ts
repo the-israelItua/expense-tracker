@@ -12,13 +12,13 @@ export class CategoryService {
     @InjectRepository(Category) private categoryRepository: Repository<Category>,
   ) {}
 
-   async find(): Promise<Category[]> {
-    const data = await this.categoryRepository.find()
+   async find(user: User): Promise<Category[]> {
+    const data = await this.categoryRepository.find({where : {userId: user.id}})
     return data
   }
 
-  async findOne(id: string) {
-    const category = await this.categoryRepository.findOne({ where: {id} });
+  async findOne(id: string, user: User) {
+    const category = await this.categoryRepository.findOne({ where: {id, userId: user.id} });
     return category
   }
 
@@ -28,8 +28,8 @@ export class CategoryService {
     return this.categoryRepository.save(category);
   }
 
-  async update(id: string, body: CreateCategoryDto) {
-    const category = await this.findOne(id)
+  async update(id: string, body: CreateCategoryDto, user: User,) {
+    const category = await this.findOne(id, user)
     if(!category){
       throw new NotFoundException("Category not found")
     }
@@ -37,8 +37,8 @@ export class CategoryService {
     return this.categoryRepository.save(category);
   }
 
-  async delete(id: string) {
-    const category = await this.findOne(id) 
+  async delete(id: string, user: User,) {
+    const category = await this.findOne(id, user) 
     if(!category){
       throw new NotFoundException("Category not found")
     }
