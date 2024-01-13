@@ -8,7 +8,7 @@ export class Expense extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: string;
 
-    @Column()
+    @Column('decimal', { precision: 6, scale: 2 })
     amount: number;
 
     @Index({ fulltext: true })
