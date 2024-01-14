@@ -42,12 +42,14 @@ export class IncomeService {
 
     Object.assign(income, body);
 
+    const data = await this.incomeRepository.save(income)
+
     await this.userService.addIncome(income.amount, {
       email: user.email,
       phoneNumber: user.phoneNumber,
     });
 
-    return this.incomeRepository.save(income);
+    return data;
   }
 
   async delete(id: string, user: User) {
@@ -55,11 +57,11 @@ export class IncomeService {
     if (!income) {
       throw new NotFoundException('Income not found');
     }
+    await this.incomeRepository.remove(income);
     await this.userService.removeIncome(income.amount, {
       email: user.email,
       phoneNumber: user.phoneNumber,
     });
-    await this.incomeRepository.remove(income);
     return 'Income deleted successfully.';
   }
 }

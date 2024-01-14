@@ -43,11 +43,12 @@ export class IncomeController {
   @Post()
   @ApiBody({ type: CreateIncomeDto })
   async createIncome(@Request() req: any, @Body() body: CreateIncomeDto) {
+    const data =  await this.incomeService.create(req.user, body);
     await this.userService.addIncome(body.amount, {
       email: req.user.email,
       phoneNumber: req.user.phoneNumber,
     });
-    return this.incomeService.create(req.user, body);
+    return data
   }
 
   @Patch('/:id')

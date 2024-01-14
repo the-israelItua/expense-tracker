@@ -55,12 +55,14 @@ export class ExpenseService {
 
     Object.assign(expense, body);
 
+  const data = await this.expenseRepository.save(expense);
+
     await this.userService.addExpense(expense.amount, {
       email: user.email,
       phoneNumber: user.phoneNumber,
     });
 
-    return this.expenseRepository.save(expense);
+    return data
   }
 
   async delete(id: string, user: User) {
@@ -68,11 +70,11 @@ export class ExpenseService {
     if (!expense) {
       throw new NotFoundException('Expense not found');
     }
+    await this.expenseRepository.remove(expense);
     await this.userService.removeExpense(expense.amount, {
       email: user.email,
       phoneNumber: user.phoneNumber,
     });
-    await this.expenseRepository.remove(expense);
     return 'Expense deleted successfully.';
   }
 }

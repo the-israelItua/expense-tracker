@@ -43,11 +43,12 @@ export class ExpenseController {
   @Post()
   @ApiBody({ type: CreateExpenseDto })
   async createExpense(@Request() req: any, @Body() body: CreateExpenseDto) {
+    const data = await this.expenseService.create(req.user, body);
     await this.userService.addExpense(body.amount, {
       email: req.user.email,
       phoneNumber: req.user.phoneNumber,
     });
-    return this.expenseService.create(req.user, body);
+    return data
   }
 
   @Patch('/:id')

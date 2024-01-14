@@ -12,7 +12,7 @@ export class Income extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: string;
 
-    @Column('decimal', { precision: 6, scale: 2 })
+    @Column({ type: 'money' })
     amount: number;
 
     @Index({ fulltext: true })
