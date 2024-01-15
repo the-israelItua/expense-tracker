@@ -21,7 +21,7 @@ console.log(process.env.DATABASE_NAME, "gsfdf")
               },
       entities: [__dirname + '/../**/*.entity.{js,ts}'],
       migrations: [__dirname + '/db/migrations/*'],
-      synchronize:  process.env.ENVIRONMENT === 'development',
+      synchronize:  true,
       dropSchema: false,
       extra: {
         connectionLimit: 1,
