@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { forwardRef, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/user/user.entity';
 import { UserService } from 'src/user/user.service';
@@ -10,7 +10,7 @@ import { Income } from './income.entity';
 export class IncomeService {
   constructor(
     @InjectRepository(Income) private incomeRepository: Repository<Income>,
-    private userService: UserService,
+    @Inject(forwardRef(() => UserService)) private userService: UserService
   ) {}
 
   async find(user: User): Promise<Income[]> {

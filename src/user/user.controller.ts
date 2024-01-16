@@ -6,17 +6,20 @@ import { UserService } from './user.service';
 
 @Controller('user')
 @SecureEndpoint()
-@Serialize(UserDto)
 export class UserController {
-    constructor(
-        private userService: UserService,
-      ) {
-  
-      }
-    
-      @Get()
-      fetchUser(@Request() req: any,) {
-        return this.userService.findOne({ email: req.user.email , phoneNumber: req.user.phoneNumber});
-      }
-    
+  constructor(private userService: UserService) {}
+
+  @Get()
+  @Serialize(UserDto)
+  fetchUser(@Request() req: any) {
+    return this.userService.findOne({
+      email: req.user.email,
+      phoneNumber: req.user.phoneNumber,
+    });
+  }
+
+  @Get('/transactions')
+  fetchUserTransactions(@Request() req: any) {
+    return this.userService.fetchTransactions(req.user);
+  }
 }
