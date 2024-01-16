@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CategoryModule } from 'src/category/category.module';
@@ -11,9 +11,9 @@ import { ExpenseService } from './expense.service';
   controllers: [ExpenseController],
   imports: [
     CategoryModule,
-    UserModule,
     JwtModule,
     TypeOrmModule.forFeature([Expense]),
+    forwardRef(() => UserModule)
   ],
   providers: [
     ExpenseService,
